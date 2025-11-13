@@ -1,0 +1,30 @@
+ **** Bipolar memristive system with threshold R2 ****
+ *D. Biolek, M. Di Ventra, Y. V. Pershin*
+ *Reliable SPICE Simulations of Memristors, Memcapacitors and Meminductors, 2013*
+ *Code for PSpice and LTspice; tested with Cadence PSpice v. 16.3 and LTspice v. 4*
+ **********************************************************************
+ .subckt memR_TH plus minus PARAMS:
+ + Ron=1K Roff=100K Rinit=5K beta=1E13 Vt=2.8
+ *model of memristive port
+ Gpm plus minus value={V(plus,minus)/V(x)}
+ *end of the model of memristive port
+ *integrator model
+ Gx 0 x value={fs(V(plus,minus),b1)*ws(v(x),V(plus,minus),b1,b2)*1p}
+ Raux x 0 1T
+ Cx x 0 1p IC={Rinit}
+ *end of integrator model
+ *smoothed functions
+ .param b1=10u b2=10u
+ .func stps(x,b)={1/(1+exp(-x/b))}
+ .func abss(x,b)={x*(stps(x,b)-stps(-x,b))}
+ .func fs(v,b)={beta*(v-0.5*(abss(v+Vt,b)-abss(v-Vt,b)))}
+ .func ws(x,v,b1,b2)={stps(v,b1)*stps(1-x/Roff,b2)+stps(-v,b1)*stps(x/Ron-1,b2)}
+ *end of smoothed functions
+ .ends memR_TH
+ .options reltol=1u
+ .options method=gear ;use only for LTspice
+ Vsin 1 0 sin 0 5 50meg
+ Xmem 1 0 memR_TH
+ .tran 0 0.1u 0 0.1n
+ .probe
+ .end
