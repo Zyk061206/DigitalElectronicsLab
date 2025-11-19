@@ -1,17 +1,25 @@
 Version 4
 SymbolType BLOCK
-RECTANGLE Normal -48 -40 64 40
-WINDOW 0 8 -40 Bottom 2
-SYMATTR Prefix X
+LINE Normal 48 24 48 -24
+LINE Normal 64 24 48 24
+LINE Normal 64 -24 64 24
+LINE Normal 48 -24 64 -24
+LINE Normal -48 -24 64 -24
+LINE Normal -48 24 -48 -24
+LINE Normal 64 24 -48 24
+LINE Normal 64 -24 64 24
+RECTANGLE Normal 64 24 48 -24
+WINDOW 0 8 -24 Bottom 2
+WINDOW 3 8 24 Top 2
 SYMATTR Value MEM_KNOWM
+SYMATTR Prefix X
 SYMATTR ModelFile C:\Users\yv236\Documents\LTspice\memristor_knowm.sub
-WINDOW 3 8 40 Top 2
 PIN -48 0 LEFT 8
 PINATTR PinName TE
 PINATTR SpiceOrder 1
-PIN 64 -16 RIGHT 8
+PIN 64 0 RIGHT 8
 PINATTR PinName BE
 PINATTR SpiceOrder 2
-PIN 64 16 RIGHT 8
+PIN -48 -16 NONE 8
 PINATTR PinName XSV
 PINATTR SpiceOrder 3
